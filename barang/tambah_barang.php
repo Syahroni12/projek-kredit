@@ -146,10 +146,10 @@ foreach ($jenis_brg as $jnb ) {
         </select>
 
     </div>
- <div class="form-group">
-            <label for="tanggal">Pilih Tanggal expired:</label>
-            <input type="date" class="form-control" id="tanggal"name="tanggal_exp">
-        </div>
+    <div class="form-group">
+    <label for="tanggal">Pilih Tanggal expired:</label>
+    <input type="date" class="form-control" id="tanggal" name="tanggal_exp" required>
+</div>
 
 
         <div class="form-group">

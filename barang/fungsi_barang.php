@@ -71,16 +71,21 @@ function tambah_data($data)
     $harga_jual_fix = preg_replace("/[^0-9]/", "", $harga_jual);
     $harga_beli = htmlspecialchars($data["harga_beli"]);
     $harga_beli_fix = preg_replace("/[^0-9]/", "", $harga_beli);
-    $tanggal_exp = htmlspecialchars($data["tanggal_exp"]);
+    $tanggal_input = htmlspecialchars($data["tanggal_exp"]);
+
+// Mengonversi tanggal ke format 'YYYY-MM-DD'
+$tanggal_exp = date('Y-m-d', strtotime($tanggal_input));
+  
    
     $id_jenis = htmlspecialchars($data["id_jenis"]);
     $gambar = upload();
+
     if (!$gambar) {
         return false;
     }
     $query = "INSERT INTO barang (nama_barang,harga_jual,harga_beli,id_jenis,tanggal_exp,gambar)
     VALUES
-    ('$nama_barang','$harga_jual_fix','$harga_beli_fix','$id_jenis',$tanggal_exp,'$gambar')";
+    ('$nama_barang','$harga_jual_fix','$harga_beli_fix','$id_jenis','$tanggal_exp','$gambar')";
         mysqli_query($conn, $query);
     
         return mysqli_affected_rows($conn);
@@ -122,19 +127,31 @@ function tambah_data($data)
         }
     }
     
-function ubah_pengguna($data)
+function ubah_barang($data)
 {
     global $conn;
+    $id_barang=$data['id_barang'];
+    $nama_barang = htmlspecialchars($data["nama_barang"]);
+    $harga_jual = htmlspecialchars($data["harga_jual"]);
+    $harga_jual_fix = preg_replace("/[^0-9]/", "", $harga_jual);
+    $harga_beli = htmlspecialchars($data["harga_beli"]);
+    $harga_beli_fix = preg_replace("/[^0-9]/", "", $harga_beli);
+    $tanggal_input = htmlspecialchars($data["tanggal_exp"]);
+    $gambarLama = htmlspecialchars($data["gambar"]);
+    if ($_FILES['gambar']['error'] === 4) {
+        $gambar = $gambarLama;
+    } else {
+        $gambar = upload();
+    } 
 
-    $id_pegawai =  $data["id_pegawai"];
-    $email =  htmlspecialchars($data["email"]);
-    $nama =  htmlspecialchars($data["nama"]);
-    $username =  htmlspecialchars($data["username"]);
-    // $password = mysqli_real_escape_string($conn, $data["password"]);
-    $no_telfon =  htmlspecialchars($data["no_telfon"]);
-    $akses =  htmlspecialchars($data["akses"]);
-    $query = "UPDATE pegawai SET nama='$nama',email='$email',username='$username',no_telfon='$no_telfon',akses='$akses' WHERE id_pegawai=$id_pegawai";
-
+    $query = "UPDATE barang SET
+    nama_barang = '$nama_barang',
+    harga_jual = '$harga_jual_fix',
+    harga_beli = '$harga_beli_fix',
+    tanggal_exp = '$tanggal_input',
+    gambar = '$gambar'
+    WHERE id_barang= $id_barang
+    ";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
