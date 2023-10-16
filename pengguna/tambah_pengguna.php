@@ -1,3 +1,22 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+if (isset($_POST["tambah"])) {
+    require '../pengguna/fungsi_pengguna.php';
+
+    // Panggil fungsi tambah_data
+    tambah_data($_POST);
+   
+
+
+}?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,8 +26,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Dashboard - SB Admin</title>
-    <link href="dist/css/styles.css" rel="stylesheet" />
+    <title>pengguna</title>
+<link rel="stylesheet" href="../dist/css/styles.css">
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
 </head>
@@ -33,30 +52,30 @@
         </ul>
     </nav>
     <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
+    <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Core</div>
-                        <a class="nav-link" href="index.php">
+                        <a class="nav-link" href="../index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
                         <div class="sb-sidenav-menu-heading">data </div>
-                        <a class="nav-link" href="jenis_barang.php">
+                        <a class="nav-link" href="../jenis_barang.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             data jenis barang
                         </a>
-                        <a class="nav-link" href="pengguna/pengguna.php">
+                        <a class="nav-link active" href="../pengguna/pengguna.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></i></div>
                             pengguna
                         </a>
 
-                        <a class="nav-link" href="suplier/data_suplier.php">
+                        <a class="nav-link" href="../suplier/data_suplier.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                             Data suplier
                         </a>
-                        <a class="nav-link" href="barang/data_barang.php">
+   <a class="nav-link" href="../barang/data_barang.php">
                             <div class="sb-nav-link-icon"><i class="fa fa-shopping-bag"></i></div>
                             Data barang
                         </a>
@@ -73,19 +92,67 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
-                    <h1 class="mt-4">Dashboard</h1>
+                    <h1 class="mt-4">pengguna</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Dashboard</li>
+                        <li class="breadcrumb-item active">penggunaa</li>
                     </ol>
-                    <div class="row">
+<?php
 
+if (isset($_SESSION['username_terdaftar'])) {
+    echo $_SESSION['username_terdaftar'];
+    var_dump($_SESSION['username_terdaftar']);
+    unset($_SESSION['username_terdaftar']); // Hapus session setelah digunakan agar pesan tidak muncul lagi
+}
+if (isset($_SESSION['email'])) {
+    echo $_SESSION['email'];
+    unset($_SESSION['email']); // Hapus session setelah digunakan agar pesan tidak muncul lagi
+}
 
+?>
 
+                  
+                    <a  class="btn btn-outline-danger mb-4" href="../pengguna/pengguna.php" >Kembali</a> 
+                    
+                    <form action=""method="post">
+  <div class="form-group">
 
-                    </div>
+    <input type="email" class="form-control" id="nama"name="email" placeholder="Masukkan email"required>
+    </div>
+  <div class="form-group">
+  <div class="form-group">
 
+    <input type="text" class="form-control" id="nama"name="nama" placeholder="Masukkan nama Pengguna"required>
+    </div>
+  <div class="form-group">
 
-                </div>
+    <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username Pengguna"required >
+    </div>
+  <div class="form-group">
+    <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password"required>
+    <div class="input-group-append">
+           
+        </div>
+
+  </div>
+  <div class="form-group">
+    <input type="number" class="form-control" id="no-telfon"name="no_telfon" placeholder ="Masukkan no telfon"required>
+    <small id="nomor-telepon-help" class="form-text text-danger"></small>
+
+  </div>
+  <div class="form-group">
+      
+        <select class="form-control" id="hak akses"name="akses">
+            <option value="">Pilih hak akses</option>
+            <option value="admin">Admin</option>
+            <option value="pegawai">Pegawai</option>
+ 
+        </select>
+    </div>
+
+  <button type="submit"name="tambah" class="btn btn-primary">Submit</button>
+</form>
+
+                
             </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid">
@@ -101,15 +168,29 @@
             </footer>
         </div>
     </div>
+    
+    <script>
+const nomorTeleponInput = document.getElementById("no-telfon");
+    const nomorTeleponHelp = document.getElementById("nomor-telepon-help");
+
+    nomorTeleponInput.addEventListener("input", function () {
+        if (this.value.length > 13) {
+            this.value = this.value.slice(0, 13); // Menghapus karakter lebih dari 13
+            nomorTeleponHelp.textContent = "Panjang nomor telepon tidak boleh lebih dari 13 karakter.";
+        } else {
+            nomorTeleponHelp.textContent = ""; // Menghapus notifikasi jika panjang karakter valid
+        }
+    });
+</script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="dist/js/scripts.js"></script>
+    <script src="../dist/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="dist/assets/demo/chart-area-demo.js"></script>
-    <script src="dist/assets/demo/chart-bar-demo.js"></script>
+    <script src="../dist/assets/demo/chart-area-demo.js"></script>
+    <script src="../dist/assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script src="dist/assets/demo/datatables-demo.js"></script>
+    <script src="../dist/assets/demo/datatables-demo.js"></script>
 </body>
 
 </html>

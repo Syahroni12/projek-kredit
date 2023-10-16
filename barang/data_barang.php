@@ -1,3 +1,10 @@
+<?php 
+  session_start();
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,10 +14,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>jenis barang</title>
-    <link href="dist/css/styles.css" rel="stylesheet" />
+    <title>barang</title>
+<link rel="stylesheet" href="../dist/css/styles.css">
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 
@@ -39,28 +45,29 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Core</div>
-                        <a class="nav-link" href="index.php">
+                        <a class="nav-link" href="../index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
                         <div class="sb-sidenav-menu-heading">data </div>
-                        <a class="nav-link" href="jenis_barang.php">
+                        <a class="nav-link" href="../jenis_barang.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             data jenis barang
                         </a>
-                        <a class="nav-link" href="pengguna/pengguna.php">
+                        <a class="nav-link" href="../pengguna/pengguna.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></i></div>
                             pengguna
                         </a>
 
-                        <a class="nav-link" href="suplier/data_suplier.php">
+                        <a class="nav-link" href="../suplier/data_suplier.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                             Data suplier
                         </a>
-                        <a class="nav-link" href="barang/data_barang.php">
+                        <a class="nav-link" href="../barang/data_barang.php">
                             <div class="sb-nav-link-icon"><i class="fa fa-shopping-bag"></i></div>
                             Data barang
                         </a>
+
                         <div class="sb-sidenav-menu-heading">Addons</div>
 
                     </div>
@@ -74,43 +81,52 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
-                    <h1 class="mt-4">JENIS BARANG</h1>
+                    <h1 class="mt-4">barang</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">JENIS BARANG</li>
+                        <li class="breadcrumb-item active">baranga</li>
                     </ol>
-
-                    <button type="button" class="btn btn-primary  mt-2 mb-3" data-toggle="modal" data-target="#tambah">
-                        tambah data
-                    </button>
+                    <?php
+                                                if (isset($_SESSION['berhasil_tambah'])) {
+                                                
+                                echo $_SESSION['berhasil_tambah'];
+                                unset($_SESSION['berhasil_tambah']);
+                     } // Hapus session setelah digunakan agar pesan tidak muncul lagi
+                    if (isset($_SESSION['berhasil_hapus'])) {
+                      
+    echo $_SESSION['berhasil_hapus'];
+    unset($_SESSION['berhasil_hapus']);
+                     } // Hapus session setelah digunakan agar pesan tidak muncul lagi
+                    if (isset($_SESSION['gagal_hapus'])) {
+                      
+    echo $_SESSION['gagal_hapus'];
+    unset($_SESSION['gagal_hapus']);
+                     } // Hapus session setelah digunakan agar pesan tidak muncul lagi
+                    if (isset($_SESSION['berhasil_ubah'])) {
+                      
+    echo $_SESSION['gagal_hapus'];
+    unset($_SESSION['gagal_hapus']);
+                     } // Hapus session setelah digunakan agar pesan tidak muncul lagi
+?>
+                    <a  class="btn btn-outline-primary" href="../barang/tambah_barang.php" >tambah data barang</a> 
                     <table class="table table-bordered">
-                        <?php require 'fungsi_jenis.php';
-                        global $conn;
-                        $jenis_brg = query("select * from jenis_barang");
-                        if (isset($_POST["tambah"])) { //cek apakah tombol tambah (dalam form bukan di halaman utama ) sudah di 
-                            //tekan atau belum
 
-                            if (tambah_data($_POST) > 0) {
-                                echo "
-                                    <script>
-                                alert('data berhasil di tambah');
-                                document.location.href='jenis_barang.php';
-                            </script>
-                                    ";
-                            } else {
-                                echo "
-                                    <script>
-                                alert('data gagal di tambah');
-                                document.location.href='jenis_barang.php';
-                            </script>
-                                    ";
-                            }
-                        }
 
-                        ?>
+                    <?php
+                    require '../barang/fungsi_barang.php';
+                     global $conn;
+                        $barang = query("select barang.*,jenis_barang.nama_jenis FROM barang JOIN jenis_barang ON barang.id_jenis=jenis_barang.id_jenis");
+                    
+                    ?>
+               
                         <thead class="text-center">
                             <tr>
                                 <td>No</td>
-                                <td>nama jenis</td>
+                                <td>Nama barang</td>
+                                <td>harga jual</td>
+                                <td>harga beli</td>
+                                <td>stok</td>
+                                <td>jenis barang</td>
+                           
                                 <td>aksi</td>
                             </tr>
                         </thead>
@@ -118,16 +134,22 @@
                             <?php
                             $no = 1;
                             ?>
-                            <?php foreach ($jenis_brg as $jnb) :
-                                $id_jenisss = $jnb["id_jenis"];
-                            ?>
+                            <?php foreach ($barang as $brg) :?>
+                            
 
                                 <tr>
                                     <th scope="row" class="text-center"><?= $no++; ?></th>
-                                    <td class="text-center"><?= $jnb["nama_jenis"]; ?></td>
+                                    <td class="text-center"><?= $brg["nama_barang"]; ?></td>
+                                    <td class="text-center"><?= $brg["harga_jual"]; ?></td>
+                                    <td class="text-center"><?= $brg["harga_beli"]; ?></td>
+                                    <td class="text-center"><?= $brg["stok"]; ?></td>
+                                    <td class="text-center"><?= $brg["nama_jenis"]; ?></td>
+                              
                                     <td class="text-center">
-                                        <a class="btn btn-danger" href="hapus_jenis.php?id_jenis=<?= $jnb["id_jenis"]; ?>" onclick="return confirm('apakah anda yakin')" role="button"><i class="fas fa-trash"></i>hapus</a>|
-                                        <a class="btn btn-warning" href="edit_jenis.php?id_jenis=<?= $jnb["id_jenis"]; ?>" role="button"><i class="fas fa-edit"></i>edit</a>|
+                                        <a class="btn btn-danger" href="../barang/hapus_barang.php?id_barang=<?=$brg["id_barang"]; ?>" onclick="return confirm('apakah anda yakin')" role="button"><i class="fas fa-trash">
+                                                </i>hapus</a>|
+                                        <a class="btn btn-warning" href="../barang/edit_barang.php?id_barang=<?= $brg["id_barang"]; ?>" role="button"><i class="fas fa-edit"></i>edit</a>|
+                                        <a class="btn btn-primary" href="../barang/edit_barang.php?id_barang=<?= $brg["id_barang"]; ?>" role="button"><i class="fas fa-eye"></i>detail</a>|
                                     </td>
                                 </tr>
 
@@ -152,44 +174,17 @@
             </footer>
         </div>
     </div>
-    <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="tambahLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">tambah jenis</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="">
-                        <div class="form-group">
-                            <label for="nama_jenis">Masukkan jenis barang baru</label>
-                            <input type="text" class="form-control" id="nama_jenis" name="nama_jenis">
-
-                        </div>
-
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" name="tambah">simpan</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
+  
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="dist/js/scripts.js"></script>
+    <script src="../dist/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="dist/assets/demo/chart-area-demo.js"></script>
-    <script src="dist/assets/demo/chart-bar-demo.js"></script>
+    <script src="../dist/assets/demo/chart-area-demo.js"></script>
+    <script src="../dist/assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script src="dist/assets/demo/datatables-demo.js"></script>
+    <script src="../dist/assets/demo/datatables-demo.js"></script>
 </body>
 
 </html>

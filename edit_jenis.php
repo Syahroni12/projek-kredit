@@ -48,8 +48,14 @@
                             data jenis barang
                         </a>
 
-
-
+                        <a class="nav-link" href="penguna/pengguna.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-person-alt"></i></div>
+                            pengguna
+                        </a>
+                        <a class="nav-link" href="../suplier/suplier.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                            Data suplier
+                        </a>
                         <div class="sb-sidenav-menu-heading">Addons</div>
 
                     </div>
