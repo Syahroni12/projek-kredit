@@ -3,7 +3,10 @@
 
   require '../barang/fungsi_barang.php';
  
-  
+  if (!isset($_SESSION['id_pegawai'])) {
+    header("Location:../awal.php");
+    exit;
+ }
   if (isset($_POST["tambah"])) {
 
   

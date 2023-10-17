@@ -1,7 +1,10 @@
 
 <?php
 session_start();
-
+if (!isset($_SESSION['id_pegawai'])) {
+    header("Location:../awal.php");
+    exit;
+ }
 if (isset($_POST["tambah"])) {
     require '../suplier/fungsi_suplier.php';
 

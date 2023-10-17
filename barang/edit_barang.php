@@ -1,6 +1,9 @@
 <?php 
   session_start();
-
+  if (!isset($_SESSION['id_pegawai'])) {
+    header("Location:../awal.php");
+    exit;
+ }
   require '../barang/fungsi_barang.php';
  
   global $conn;
@@ -17,7 +20,7 @@
         } else {
             $_SESSION['gagal_ubah'] = '<div class="alert alert-danger" role="alert">Data gagal di ubah.</div>';
             
-            header("Location:../barang/edit_pengguna.php");;
+            header("Location:../barang/edit_barang.php");;
         }
     } ?>
 
@@ -112,6 +115,7 @@
                     <form action=""method="post"enctype="multipart/form-data">
   <div class="form-group">
   <input type="hidden" name="id_barang" value="<?= $barang['id_barang']; ?>">
+  <input type="hidden" name="gambarLama" value="<?= $barang['gambar']; ?>">
     <input type="text" class="form-control" id="nama_barang"name="nama_barang" placeholder="Masukkan nama_barang"value="<?= $barang["nama_barang"]; ?>"required>
     </div>
   
@@ -155,8 +159,8 @@ foreach ($jenis_brg as $jnb ) {
 
         <div class="form-group">
     <label for="gambar">Gambar</label>
-    <input type="file" class="form-control-file" id="gambar" name="gambar" onchange="previewImage(this);">
-    <img id="gambar-preview" src="../upload/<?= htmlspecialchars($barang["gambar"]); ?>" alt="Gambar Pratinjau" style="max-width: 100%;">
+    <input type="file" class="form-control-file" id="gambar" name="gambar" onchange="previewImage(this);" >
+    <img id="gambar-preview" src="../upload/<?= $barang["gambar"]; ?>"  style="max-width: 100%;">
       </div>
   <button type="submit"name="ubah" class="btn btn-primary">Submit</button>
 </form>

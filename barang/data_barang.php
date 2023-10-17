@@ -1,6 +1,9 @@
 <?php 
   session_start();
-
+  if (!isset($_SESSION['id_pegawai'])) {
+    header("Location:../awal.php");
+    exit;
+ }
 
 
 
@@ -149,6 +152,7 @@
                                         <a class="btn btn-danger" href="../barang/hapus_barang.php?id_barang=<?=$brg["id_barang"]; ?>" onclick="return confirm('apakah anda yakin')" role="button"><i class="fas fa-trash">
                                                 </i>hapus</a>|
                                         <a class="btn btn-warning" href="../barang/edit_barang.php?id_barang=<?= $brg["id_barang"]; ?>" role="button"><i class="fas fa-edit"></i>edit</a>|
+                                        <a class="btn btn-primary" href="../barang/detail_barang.php?id_barang=<?= $brg["id_barang"]; ?>" role="button"><i class="fas fa-eye"></i>detail</a>|
                                     </td>
                                 </tr>
 

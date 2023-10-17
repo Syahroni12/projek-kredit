@@ -1,6 +1,9 @@
 <?php 
   session_start();
-
+  if (!isset($_SESSION['id_pegawai'])) {
+    header("Location:../awal.php");
+    exit;
+ }
 
 
 
@@ -116,7 +119,7 @@
                         $pengguna = query("select * from pegawai");
                     
                     ?>
-               
+           
                         <thead class="text-center">
                             <tr>
                                 <td>No</td>

@@ -137,12 +137,18 @@ function ubah_barang($data)
     $harga_beli = htmlspecialchars($data["harga_beli"]);
     $harga_beli_fix = preg_replace("/[^0-9]/", "", $harga_beli);
     $tanggal_input = htmlspecialchars($data["tanggal_exp"]);
-    $gambarLama = htmlspecialchars($data["gambar"]);
-    if ($_FILES['gambar']['error'] === 4) {
-        $gambar = $gambarLama;
-    } else {
-        $gambar = upload();
-    } 
+    $gambarLama = htmlspecialchars($data["gambarLama"]);
+
+    // ...
+if ($_FILES['gambar']['error'] === 4) {
+    // Tidak ada file yang diunggah, gunakan nilai $gambarLama dari database
+    $gambar = $gambarLama;
+    var_dump($gambarLama);
+} else {
+    // Ada file yang diunggah, unggah gambar baru
+    $gambar = upload();
+}
+// ...
 
     $query = "UPDATE barang SET
     nama_barang = '$nama_barang',

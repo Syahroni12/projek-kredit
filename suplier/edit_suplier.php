@@ -1,6 +1,10 @@
 <?php
  require '../suplier/fungsi_suplier.php';
 session_start();
+if (!isset($_SESSION['id_pegawai'])) {
+    header("Location:../awal.php");
+    exit;
+ }
 error_reporting(E_ALL);
 
 global $conn;

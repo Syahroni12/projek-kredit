@@ -1,4 +1,5 @@
 <?php
+
 $conn = mysqli_connect("localhost", "root", "", "kreditan");
 
 
@@ -18,11 +19,11 @@ function tambah_data($data)
     $email =  htmlspecialchars($data["email"]);
     $nama =  htmlspecialchars($data["nama"]);
     $username =  htmlspecialchars($data["username"]);
-    $password = mysqli_real_escape_string($conn, $data["password"]);
+    $password = md5($data["password"]);
     $no_telfon =  htmlspecialchars($data["no_telfon"]);
     $akses =  htmlspecialchars($data["akses"]);
 
-    $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+ 
     $query_cek = "SELECT * FROM pegawai WHERE username = '$username'";
     $query_cek2 = "SELECT * FROM pegawai WHERE email = '$email'";
   
@@ -41,7 +42,7 @@ function tambah_data($data)
         
     }elseif (mysqli_num_rows($result2) > 0) {
         # code...
-        session_start();
+        session_start(); 
         $_SESSION['email'] = '<div class="alert alert-danger" role="alert"> email sudah terdaftar sudah ada dalam database.</div>';
     
         header("Location:../pengguna/tambah_pengguna.php");
@@ -52,7 +53,7 @@ function tambah_data($data)
     
      
         // Jika nama jenis belum ada, lakukan penambahan data
-        $query = "INSERT INTO pegawai VALUES ('', '$nama','$email','$username','$password_hashed','$no_telfon','$akses')";
+        $query = "INSERT INTO pegawai VALUES ('', '$nama','$email','$username','$password','$no_telfon','$akses')";
         mysqli_query($conn, $query);
         // Atur session alert Bootstrap untuk sukses
         session_start();

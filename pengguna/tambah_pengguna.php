@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['id_pegawai'])) {
+    header("Location:../awal.php");
+    exit;
+ }
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 if (isset($_POST["tambah"])) {
