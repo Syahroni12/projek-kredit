@@ -12,6 +12,11 @@ function query($query)
     }
     return $rows;
 }
+ function tampil_data()  {
+          global $conn;
+                 $result=query("select * from suplier"); 
+                 return $result;
+}
 function tambah_data($data)
 {
     global $conn;

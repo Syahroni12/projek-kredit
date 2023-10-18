@@ -1,12 +1,13 @@
-<?php
-session_start();
-if (!isset($_SESSION['id_pegawai'])) {
-    header("Location:awal.php");
+<?php 
+  session_start();
+  if (!isset($_SESSION['id_pegawai'])) {
+    header("Location:../awal.php");
     exit;
  }
+
+
+
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,10 +17,9 @@ if (!isset($_SESSION['id_pegawai'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>jenis barang</title>
-    <link href="dist/css/styles.css" rel="stylesheet" />
+    <title>pengguna</title>
+<link rel="stylesheet" href="../dist/css/styles.css">
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 
@@ -48,33 +48,34 @@ if (!isset($_SESSION['id_pegawai'])) {
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Core</div>
-                        <a class="nav-link" href="index.php">
+                        <a class="nav-link" href="../index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
                         <div class="sb-sidenav-menu-heading">data </div>
-                        <a class="nav-link" href="jenis_barang.php">
+                        <a class="nav-link" href="../jenis_barang.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             data jenis barang
                         </a>
-                        <a class="nav-link" href="pengguna/pengguna.php">
+                        <a class="nav-link" href="../pengguna/pengguna.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></i></div>
                             pengguna
                         </a>
 
-                        <a class="nav-link" href="suplier/data_suplier.php">
+                        <a class="nav-link active" href="suplier/data_suplier.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                             Data suplier
                         </a>
-                        <a class="nav-link" href="barang/data_barang.php">
+                        <a class="nav-link" href="../barang/data_barang.php">
                             <div class="sb-nav-link-icon"><i class="fa fa-shopping-bag"></i></div>
                             Data barang
                         </a>
                         <div class="sb-sidenav-menu-heading">Transkasi</div>
-                        <a class="nav-link" href="Restok/tahap_awal.php">
+                        <a class="nav-link" href="../Restok/tahap_awal.php">
                             <div class="sb-nav-link-icon"><i class="fa fa-shopping-bag"></i></div>
                             Restok
                         </a>
+
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -86,43 +87,30 @@ if (!isset($_SESSION['id_pegawai'])) {
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
-                    <h1 class="mt-4">JENIS BARANG</h1>
+                    <h1 class="mt-4">Suplier</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">JENIS BARANG</li>
+                        <li class="breadcrumb-item active">data Suplier</li>
                     </ol>
+           
+                      <table class="table table-bordered">
 
-                    <button type="button" class="btn btn-primary  mt-2 mb-3" data-toggle="modal" data-target="#tambah">
-                        tambah data
-                    </button>
-                    <table class="table table-bordered">
-                        <?php require 'fungsi_jenis.php';
-                        global $conn;
-                        $jenis_brg = query("select * from jenis_barang");
-                        if (isset($_POST["tambah"])) { //cek apakah tombol tambah (dalam form bukan di halaman utama ) sudah di 
-                            //tekan atau belum
 
-                            if (tambah_data($_POST) > 0) {
-                                echo "
-                                    <script>
-                                alert('data berhasil di tambah');
-                                document.location.href='jenis_barang.php';
-                            </script>
-                                    ";
-                            } else {
-                                echo "
-                                    <script>
-                                alert('data gagal di tambah');
-                                document.location.href='jenis_barang.php';
-                            </script>
-                                    ";
-                            }
-                        }
-
-                        ?>
+                    <?php
+                    require '../suplier/fungsi_suplier.php';
+                    
+                        $suplier = tampil_data();
+                    
+                    ?>
+               
                         <thead class="text-center">
                             <tr>
                                 <td>No</td>
-                                <td>nama jenis</td>
+                                <td>Nama suplier</td>
+                                <td>alamat</td>
+                                <td>jenis_kelamin</td>
+                            
+                                <td>no telfon</td>
+                            
                                 <td>aksi</td>
                             </tr>
                         </thead>
@@ -130,16 +118,21 @@ if (!isset($_SESSION['id_pegawai'])) {
                             <?php
                             $no = 1;
                             ?>
-                            <?php foreach ($jenis_brg as $jnb) :
-                                $id_jenisss = $jnb["id_jenis"];
-                            ?>
+                            <?php foreach ($suplier as $spr) :?>
+                            
 
                                 <tr>
                                     <th scope="row" class="text-center"><?= $no++; ?></th>
-                                    <td class="text-center"><?= $jnb["nama_jenis"]; ?></td>
+                                    <td class="text-center"><?= $spr["nama_suplier"]; ?></td>
+                                    <td class="text-center"><?= $spr["alamat"]; ?></td>
+                                    <td class="text-center"><?= $spr["jenis_kelamin"]; ?></td>
+                                
+                                  
+                                    <td class="text-center"><?= $spr["no_telfon"]; ?></td>
                                     <td class="text-center">
-                                        <a class="btn btn-danger" href="hapus_jenis.php?id_jenis=<?= $jnb["id_jenis"]; ?>" onclick="return confirm('apakah anda yakin')" role="button"><i class="fas fa-trash"></i>hapus</a>|
-                                        <a class="btn btn-warning" href="edit_jenis.php?id_jenis=<?= $jnb["id_jenis"]; ?>" role="button"><i class="fas fa-edit"></i>edit</a>|
+                                        <!-- <a class="btn btn-danger" href="../suplier/hapus_suplier.php?id_suplier=<?=$spr["id_suplier"]; ?>" onclick="return confirm('apakah anda yakin')" role="button"><i class="fas fa-trash">
+                                                </i>hapus</a>| -->
+                                        <a class="btn btn-warning" href="../Restok/tahap_kedua.php?id_suplier=<?= $spr["id_suplier"]; ?>" role="button"><i class="fas fa-plus"></i>pilih suplier</a>|
                                     </td>
                                 </tr>
 
@@ -164,7 +157,7 @@ if (!isset($_SESSION['id_pegawai'])) {
             </footer>
         </div>
     </div>
-    <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="tambahLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="tambahLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -191,17 +184,17 @@ if (!isset($_SESSION['id_pegawai'])) {
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="dist/js/scripts.js"></script>
+    <script src="../dist/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="dist/assets/demo/chart-area-demo.js"></script>
-    <script src="dist/assets/demo/chart-bar-demo.js"></script>
+    <script src="../dist/assets/demo/chart-area-demo.js"></script>
+    <script src="../dist/assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script src="dist/assets/demo/datatables-demo.js"></script>
+    <script src="../dist/assets/demo/datatables-demo.js"></script>
 </body>
 
 </html>

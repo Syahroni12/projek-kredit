@@ -70,7 +70,11 @@
                             <div class="sb-nav-link-icon"><i class="fa fa-shopping-bag"></i></div>
                             Data barang
                         </a>
-                        <div class="sb-sidenav-menu-heading">Addons</div>
+                        <div class="sb-sidenav-menu-heading">Transkasi</div>
+                        <a class="nav-link" href="../Restok/tahap_awal.php">
+                            <div class="sb-nav-link-icon"><i class="fa fa-shopping-bag"></i></div>
+                            Restok
+                        </a>
 
                     </div>
                 </div>
@@ -110,8 +114,8 @@
 
                     <?php
                     require '../suplier/fungsi_suplier.php';
-                     global $conn;
-                        $suplier = query("select * from suplier");
+                    
+                        $suplier = tampil_data();
                     
                     ?>
                

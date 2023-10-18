@@ -92,7 +92,11 @@ if (tambah_data($_POST)>0) {
                             <div class="sb-nav-link-icon"><i class="fa fa-shopping-bag"></i></div>
                             Data barang
                         </a>
-                        <div class="sb-sidenav-menu-heading">Addons</div>
+                        <div class="sb-sidenav-menu-heading">Transkasi</div>
+                        <a class="nav-link" href="../Restok/tahap_awal.php">
+                            <div class="sb-nav-link-icon"><i class="fa fa-shopping-bag"></i></div>
+                            Restok
+                        </a>
 
                     </div>
                 </div>

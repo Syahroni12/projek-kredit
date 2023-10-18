@@ -22,7 +22,19 @@
     <link rel="stylesheet" href="alert/animate.min.css">
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+<?php if (isset($_SESSION['berhasil_login'])) {
+  echo  "<script>
+Swal.fire({
+  title: 'Error!',
+  text: 'Do you want to continue',
+  icon: 'error',
+  confirmButtonText: 'Cool'
+})
+</script>";
+
+} ?>
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -71,8 +83,11 @@
                             <div class="sb-nav-link-icon"><i class="fa fa-shopping-bag"></i></div>
                             Data barang
                         </a>
-                        <div class="sb-sidenav-menu-heading">Addons</div>
-
+                        <div class="sb-sidenav-menu-heading">Transaksi</div>
+                        <a class="nav-link" href="Restok/tahap_awal.php">
+                            <div class="sb-nav-link-icon"><i class="fa fa-shopping-bag"></i></div>
+                            Restok
+                        </a>
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">

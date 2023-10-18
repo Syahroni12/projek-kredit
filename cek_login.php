@@ -17,6 +17,8 @@ require 'pengguna/fungsi_pengguna.php';
            $_SESSION["id_pegawai"]=$row['id_pegawai'];
     $_SESSION["hak_akses"]=$row['akses'];
     $_SESSION["username_pegawai"]=$row['username'];
+    $_SESSION["berhasil_login"]="selamat anda berhasil login";
+   
         header("Location:index.php");  
         }else {
             $_SESSION['akses_salah'] = '<div class="alert alert-danger" role="alert">maaf hanya admin yang boleh mengakses web ini.</div>';
